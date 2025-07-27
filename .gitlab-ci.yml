@@ -3,7 +3,7 @@ stages:
 
 change infra:
   stage: infra-change
-  # image: oowy/opentofu
+  image: oowy/opentofu
   script:
     - tofu version
   rules:
