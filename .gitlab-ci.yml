@@ -6,7 +6,7 @@ change infra:
   script:
     - tofu init
     - tofu validate
-    - tofu plan # -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+    - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
     - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" # -auto-approve
 # rules:
 #   - if: $CI_COMMIT_BRANCH == "master"
