@@ -15,8 +15,8 @@ provider "proxmox" {
   pm_debug            = true                                    # Enable debug mode for detailed logs
 }
 
-variable "pm_api_token_secret" {
-  description = "proxmox api token secret"
-  type = string
-  sensitive = true
-}
+# variable "pm_api_token_secret" {
+#   description = "proxmox api token secret"
+#   type = string
+#   sensitive = true
+# }
