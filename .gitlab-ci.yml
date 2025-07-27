@@ -4,6 +4,7 @@ stages:
 change infra:
   stage: infra-change
   script:
+    - pwd
     - tofu version
     - tofu plan
 
