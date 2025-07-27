@@ -1,3 +1,9 @@
+cache:
+  key: tofu
+  paths:
+    - .terraform/
+    - .terraform.lock.hcl
+
 stages:
   - infra-plan
   - infra-apply
@@ -13,8 +19,6 @@ plan infra:
     paths:
       - tfplan
       - plan.txt
-      - .terraform.lock.hcl
-      - .terraform/
 
 apply infra:
   stage: infra-apply
