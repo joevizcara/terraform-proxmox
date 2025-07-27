@@ -7,7 +7,6 @@ change infra:
     - tofu init
     - tofu version
     - tofu plan
-#f
 # rules:
 #   - if: $CI_COMMIT_BRANCH == "master"
 #     changes:
