@@ -21,7 +21,7 @@ apply infra:
   script:
     - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
   dependencies:
-    - infra-plan
+    - plan infra
   when: manual
 # rules:
 #   - if: $CI_COMMIT_BRANCH == "master"
