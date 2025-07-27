@@ -1,13 +1,21 @@
 stages:
-  - infra-change
+  - infra-plan
+  - infra-apply
 
-change infra:
-  stage: infra-change
+plan infra:
+  stage: infra-plan
   script:
     - tofu init
     - tofu validate
     - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
-    - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" # -auto-approve
+
+apply infra:
+  stage: infra-apply
+  script:
+    - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+  dependencies:
+    - plan
+  when: manual
 # rules:
 #   - if: $CI_COMMIT_BRANCH == "master"
 #     changes:
