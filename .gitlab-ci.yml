@@ -5,6 +5,7 @@ change infra:
   stage: infra-change
   # image: oowy/opentofu
   script:
+    - cat /etc/os-release
     - tofu version
     - tofu plan
   # rules:
