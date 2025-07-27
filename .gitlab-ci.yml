@@ -3,6 +3,7 @@ cache:
   paths:
     - .terraform/
     - .terraform.lock.hcl
+    - tfplan
 
 stages:
   - infra-plan
@@ -14,11 +15,10 @@ plan infra:
     - tofu init
     - tofu validate
     - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
-    - tofu show -no-color tfplan > plan.txt
+    - tofu show -no-color tfplan > tfplan.txt
   artifacts:
     paths:
-      - tfplan
-      - plan.txt
+      - tfplan.txt
 
 apply infra:
   stage: infra-apply
