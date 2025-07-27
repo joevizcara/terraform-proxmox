@@ -7,13 +7,21 @@ plan infra:
   script:
     - tofu init
     - tofu validate
-    - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+    - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
+    - tofu show -no-color tfplan > plan.txt
+  artifacts:
+    paths:
+      - tfplan
+      - plan.txt
+      - .terraform.lock.hcl
+      - .terraform/
 
 apply infra:
   stage: infra-apply
   script:
     - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
-
+  dependencies:
+    - infra-plan
   when: manual
 # rules:
 #   - if: $CI_COMMIT_BRANCH == "master"
