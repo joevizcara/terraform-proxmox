@@ -1,0 +1,12 @@
+stages:
+  - infra-change
+
+change infra:
+  stage: infra-change
+  # image: oowy/opentofu
+  script:
+    - tofu version
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      changes:
+        - init # any change in this file will trigger gitlab runner
