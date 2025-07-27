@@ -7,8 +7,8 @@ change infra:
     - tofu init
     - tofu version
     - tofu plan
-
-  # rules:
-  #   - if: $CI_COMMIT_BRANCH == "master"
-  #     changes:
-  #       - init # any change in this file will trigger gitlab runner
+#f
+# rules:
+#   - if: $CI_COMMIT_BRANCH == "master"
+#     changes:
+#       - init # any change in this file will trigger gitlab runner
