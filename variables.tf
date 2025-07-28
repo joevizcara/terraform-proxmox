@@ -12,4 +12,3 @@ variable "pm_api_token_id" {
   type = string
   default = "tofu-user@pam!tofu-token"
 }
-#
