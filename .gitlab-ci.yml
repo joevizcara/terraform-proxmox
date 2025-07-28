@@ -23,7 +23,7 @@ plan infra:
 apply infra:
   stage: infra-apply
   script:
-    - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+    - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -auto-approve
   dependencies:
     - plan infra
   when: manual
