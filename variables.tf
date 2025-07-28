@@ -1,5 +1,14 @@
 variable "pm_api_token_secret" {
-  description = "Proxmox API token secret"
   type        = string
   sensitive   = true
+}
+
+variable "pm_api_url" {
+  type = string
+  default = "https://192.168.1.30:8006/api2/json"
+}
+
+variable "var.pm_api_token_id" {
+  type = string
+  default = "tofu-user@pam!tofu-token"
 }
