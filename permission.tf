@@ -5,9 +5,7 @@ resource "null_resource" "proxmox_role" {
 
   provisioner "local-exec" {
     command = <<EOT
-      # pveum role add tofu-role -privs "Datastore.AllocateSpace Datastore.Audit Pool.Allocate Sys.Audit Sys.Console Sys.Modify VM.Allocate VM.Audit VM.Clone VM.Config.CDROM VM.Config.Cloudinit VM.Config.CPU VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options VM.Migrate VM.Monitor VM.PowerMgmt" || \
       pveum role modify tofu-role -privs "Datastore.AllocateSpace Datastore.Audit Pool.Allocate Sys.Audit Sys.Console Sys.Modify VM.Allocate VM.Audit VM.Clone VM.Config.CDROM VM.Config.Cloudinit VM.Config.CPU VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options VM.Migrate VM.Monitor VM.PowerMgmt"
-      # pveum aclmod / -user tofu-user@pam -role tofu-role
     EOT
     environment = {
       PM_API_URL          = "https://192.168.1.30:8006/api2/json" # Replace with Proxmox node IP/hostname
