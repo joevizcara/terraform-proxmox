@@ -1,4 +1,4 @@
-resource "proxmox_role" "tofu_role" {
+resource "proxmox_acl" "tofu_role" {
   role_id = "tofu-role"
   privileges = [
     "Datastore.AllocateSpace",
