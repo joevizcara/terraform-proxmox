@@ -9,6 +9,6 @@ terraform {
 
 provider "proxmox" {
   endpoint  = var.pm_api_url
-  api_token = "${var.pm_api_token_id}=${var.pm_api_token_secret}"
+  api_token = "${var.pm_api_token_id}=660e16f5-2d34-4725-a354-1049ee033a0b"
   insecure  = true
 }
