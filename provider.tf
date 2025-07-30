@@ -12,3 +12,4 @@ provider "proxmox" {
   api_token = "${var.pm_api_token_id}=${var.pm_api_token_secret}"
   insecure  = true
 }
+#
