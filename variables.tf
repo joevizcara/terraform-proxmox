@@ -1,7 +1,7 @@
-variable "pm_api_token_secret" {
-  type      = string
-  sensitive = true
-}
+# variable "pm_api_token_secret" {
+#   type      = string
+#   sensitive = true
+# }
 
 variable "pm_api_url" {
   type    = string
