@@ -13,6 +13,7 @@ plan infra:
   stage: infra-plan
   script:
     - tofu init
+    - ssh-keygen -f id_ed25519 -N ""
     - tofu validate
     - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
     - tofu show -no-color tfplan > tfplan.txt
