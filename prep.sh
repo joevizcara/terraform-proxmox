@@ -50,14 +50,13 @@ pveum group add tofu-group
 
 pveum user modify tofu-user@pam -group tofu-group
 
-pveum role add tofu-role -privs "Datastore.AllocateSpace Datastore.Audit Pool.Allocate \
-Sys.Audit Sys.Console Sys.Modify Sys.PowerMgmt VM.Allocate VM.Audit VM.Clone VM.Config.CDROM VM.Config.Cloudinit \
-VM.Config.CPU VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options \
-VM.Migrate VM.Monitor VM.PowerMgmt SDN.Use Sys.Incoming VM.Backup"
+pveum role add tofu-role -privs "VM.Allocate VM.Audit VM.Backup VM.Clone VM.Config.CDROM VM.Config.CPU \
+VM.Config.Cloudinit VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options \
+VM.Console VM.Migrate VM.Monitor VM.PowerMgmt VM.Snapshot VM.Snapshot.Rollback"
 
 pveum user token add tofu-user@pam tofu-token -privsep 0 > tofu-token.txt
 
-pveum acl modify / -token 'tofu-user@pam!tofu-token' -role tofu-role
+pveum acl modify / -group tofu-group -role tofu-role
 
 echo - this script has created a new lxc container with vmid $VMID that is hosting opentofu
 echo and a registered gitlab runner to manage your proxmox virtual infrastructure.
