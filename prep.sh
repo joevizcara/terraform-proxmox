@@ -33,6 +33,7 @@ sleep 7 && \
 pct exec $VMID -- apt update
 pct exec $VMID -- apt full-upgrade -y
 pct exec $VMID -- apt install curl -y
+pct exec $VMID -- apt install sshpass -y
 pct exec $VMID -- curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
 pct exec $VMID -- chmod +x install-opentofu.sh
 pct exec $VMID -- ./install-opentofu.sh --install-method deb
@@ -42,8 +43,6 @@ pct exec $VMID -- ./script.deb.sh
 pct exec $VMID -- apt install gitlab-runner -y
 read -p "Enter the Registration Token of your GitLab Project: " PROJECT_REGISTRATION_TOKEN && \
 pct exec $VMID -- gitlab-runner register --non-interactive --url "https://gitlab.com/" --registration-token "$PROJECT_REGISTRATION_TOKEN" --executor "shell" --description "GitLab Runner on Proxmox Ubuntu LTS LXC" --maintenance-note "" --tag-list "" --run-untagged="true" --locked="false" --access-level="not_protected"
-pct exec $VMID -- ssh-keygen -f .ssh/id_ed25519 -N ""
-pct exec $VMID -- cp .ssh/id_ed25519 /home/gitlab-runner/
 pct exec $VMID -- reboot
 
 pveum user add tofu-user@pam
