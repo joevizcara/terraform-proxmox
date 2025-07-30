@@ -50,9 +50,11 @@ pveum group add tofu-group
 
 pveum user modify tofu-user@pam -group tofu-group
 
-pveum role add tofu-role -privs "VM.Allocate VM.Audit VM.Backup VM.Clone VM.Config.CDROM VM.Config.CPU \
-VM.Config.Cloudinit VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options \
-VM.Console VM.Migrate VM.Monitor VM.PowerMgmt VM.Snapshot VM.Snapshot.Rollback"
+pveum role add tofu-role -privs "Datastore.Allocate Datastore.AllocateSpace Datastore.AllocateTemplate \
+Datastore.Audit Group.Allocate Mapping.Audit Mapping.Use Pool.Allocate Pool.Audit Realm.AllocateUser \
+SDN.Allocate SDN.Audit SDN.Use Sys.Audit Sys.Console Sys.Syslog User.Modify VM.Allocate VM.Audit VM.Backup \
+VM.Clone VM.Config.CDROM VM.Config.CPU VM.Config.Cloudinit VM.Config.Disk VM.Config.HWType VM.Config.Memory \
+VM.Config.Network VM.Config.Options VM.Console VM.Migrate VM.Monitor VM.PowerMgmt VM.Snapshot VM.Snapshot.Rollback"
 
 pveum user token add tofu-user@pam tofu-token -privsep 0 > tofu-token.txt
 
