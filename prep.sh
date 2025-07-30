@@ -56,6 +56,8 @@ pveum user token add tofu-user@pam tofu-token -privsep 0 > tofu-token.txt
 
 pveum acl modify / -group tofu-group -role tofu-role
 
+pvesm set local --content import,rootdir,images,iso,vztmpl,backup,snippets
+
 echo - this script has created a new lxc container with vmid $VMID that is hosting opentofu
 echo and a registered gitlab runner to manage your proxmox virtual infrastructure.
 echo - the proxmox api token is in plain text at ./tofu-token.txt.
