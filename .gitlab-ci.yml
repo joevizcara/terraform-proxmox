@@ -24,6 +24,7 @@ plan infra:
 apply infra:
   stage: infra-apply
   script:
+    - ssh-keygen -f id_ed25519 -N ""
     - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -auto-approve
   dependencies:
     - plan infra
