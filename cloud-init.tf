@@ -1,40 +1,82 @@
-# resource "proxmox_virtual_environment_vm" "ubuntu_clone" {
-#   name      = "ubuntu-clone"
-#   node_name = var.vm_node
 
-#   clone {
-#     vm_id = proxmox_virtual_environment_vm.ubuntu_template.id
-#   }
+data "local_file" "ssh_public_key" {
+  filename = ".ssh/id_ed25519.pub"
+}
 
-#   agent {
-#     # NOTE: The agent is installed and enabled as part of the cloud-init configuration in the template VM, see cloud-config.tf
-#     # The working agent is *required* to retrieve the VM IP addresses.
-#     # If you are using a different cloud-init configuration, or a different clone source
-#     # that does not have the qemu-guest-agent installed, you may need to disable the `agent` below and remove the `vm_ipv4_address` output.
-#     # See https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm#qemu-guest-agent for more details.
-#     enabled = true
-#   }
+resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = var.vm_node
 
-#   memory {
-#     dedicated = 768
-#   }
+  source_raw {
+    data = <<-EOF
+    #cloud-config
+    hostname: test-ubuntu
+    timezone: America/Toronto
+    users:
+      - default
+      - name: ubuntu
+        groups:
+          - sudo
+        shell: /bin/bash
+        ssh_authorized_keys:
+          - ${trimspace(data.local_file.ssh_public_key.content)}
+        sudo: ALL=(ALL) NOPASSWD:ALL
+    package_update: true
+    packages:
+      - qemu-guest-agent
+      - net-tools
+      - curl
+    runcmd:
+      - systemctl enable qemu-guest-agent
+      - systemctl start qemu-guest-agent
+      - echo "done" > /tmp/cloud-config.done
+    EOF
 
-#   initialization {
-#     dns {
-#       servers = ["1.1.1.1"]
-#     }
-#     ip_config {
-#       ipv4 {
-#         address = "dhcp"
-#       }
-#     }
-#   }
-# }
+    file_name = "user-data-cloud-config.yaml"
+  }
+}
 
-# output "vm_ipv4_address" {
-#   value = proxmox_virtual_environment_vm.ubuntu_clone.ipv4_addresses[1][0]
-# }
+resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
+  name      = "test-ubuntu"
+  node_name = var.vm_node
 
+  agent {
+    enabled = true
+  }
+
+  cpu {
+    cores = 2
+  }
+
+  memory {
+    dedicated = 2048
+  }
+
+  disk {
+    datastore_id = "local-lvm"
+    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
+    interface    = "virtio0"
+    iothread     = true
+    discard      = "on"
+    size         = 20
+  }
+
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+
+    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+  }
+
+  network_device {
+    bridge = "vmbr0"
+  }
+
+}
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   content_type = "import"
@@ -45,68 +87,6 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   file_name = "noble-server-cloudimg-amd64.qcow2"
 }
 
-# resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-#   content_type = "import"
-#   datastore_id = "local-lvm"
-#   node_name    = var.vm_node
-#   url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-#   # need to rename the file to *.qcow2 to indicate the actual file format for import
-#   file_name = "noble-server-cloudimg-amd64.img"
-# }
-
-
-# resource "proxmox_virtual_environment_vm" "vm" {
-#   name      = var.vm_name
-#   node_name = var.vm_node
-
-#   agent {
-#     enabled = true
-#   }
-
-#   cpu {
-#     cores = var.vm_cores
-#   }
-
-#   memory {
-#     dedicated = var.vm_memory
-#   }
-
-#   disk {
-#     datastore_id = "local-lvm"
-#     import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
-#     interface    = "virtio0"
-#     iothread     = true
-#     discard      = "on"
-#     size         = 20
-#   }
-
-#   initialization {
-#     ip_config {
-#       ipv4 {
-#         address = "dhcp"
-#       }
-#     }
-
-#     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
-#   }
-
-#   network_device {
-#     bridge = "vmbr0"
-#   }
-
-# }
-
-# resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-#   content_type = "import"
-#   datastore_id = "local-lvm"
-#   node_name    = var.vm_node
-#   url          = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
-#   # need to rename the file to *.qcow2 to indicate the actual file format for import
-#   file_name = "jammy-server-cloudimg-amd64.qcow2"
-# }
-
-# resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
-#   content_type = "snippets"
-#   datastore_id = "local"
-#   node_name    = var.vm_node
-# }
+output "vm_ipv4_address" {
+  value = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
+}
