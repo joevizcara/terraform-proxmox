@@ -14,7 +14,7 @@ plan infra:
   script:
     - tofu init
     - tofu validate
-    - pwd
+    - whoami
     - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
     - tofu show -no-color tfplan > tfplan.txt
   artifacts:
