@@ -45,7 +45,7 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   node_name    = var.vm_node
   url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.tar.gz"
   # need to rename the file to *.qcow2 to indicate the actual file format for import
-  file_name = "noble-server-cloudimg-amd64.qcow2"
+  file_name = "tofu-noble-server-cloudimg-amd64.qcow2"
 }
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
