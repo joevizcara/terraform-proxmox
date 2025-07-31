@@ -15,8 +15,8 @@ copy ssh:
   script:
     - |
       if [ ! -f /home/gitlab-runner/SSH_COPY ]; then
-        ssh-keygen -f /home/gitlab-runner/.ssh/id_ed25519 -N "" -qy
-        ssh-copy-id -i /home/gitlab-runner/.ssh/id_ed25519.pub tofu-user@$PM_NODE_IP_ADDRESS
+        ssh-keygen -f /home/gitlab-runner/id_ed25519 -N "" -qy
+        ssh-copy-id -i /home/gitlab-runner/id_ed25519.pub tofu-user@$PM_NODE_IP_ADDRESS
         touch /home/gitlab-runner/SSH_COPY
       else
         echo The SSH ID is already copied to the PVE Node. Skipping ...
