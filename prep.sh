@@ -47,7 +47,6 @@ sleep 7 && \
 pct exec $VMID -- apt update
 pct exec $VMID -- apt full-upgrade -y
 pct exec $VMID -- apt install curl -y
-# pct exec $VMID -- apt install sshpass -y
 pct exec $VMID -- curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
 pct exec $VMID -- chmod +x install-opentofu.sh
 pct exec $VMID -- ./install-opentofu.sh --install-method deb
@@ -73,7 +72,11 @@ pveum acl modify / -group tofu-group -role tofu-role
 
 pvesm set local --content import,rootdir,images,iso,vztmpl,backup,snippets
 
-echo - this script has created a new lxc container with vmid $VMID that is hosting opentofu
-echo and a registered gitlab runner to manage your proxmox virtual infrastructure.
-echo - the proxmox api token is in plain text at ./tofu-token.txt.
-echo - consider deleting that file after saving it into somewhere secure.
+
+cat << 'EOF'
+
+- this script has created a new lxc container with vmid $VMID that is hosting opentofu
+and a registered gitlab runner to manage your proxmox virtual infrastructure.
+- the proxmox api token is in plain text at ./tofu-token.txt.
+- consider deleting that file after saving it into somewhere secure.
+EOF
