@@ -28,7 +28,7 @@ variable "vm_name" {
   default = "ubuntu-cloud-init"
 }
 
-variable "vm_node" {
+variable "pm_node" {
   type = string
   default = "neo"
 }
