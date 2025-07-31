@@ -13,7 +13,8 @@ plan infra:
   stage: infra-plan
   script:
     - tofu init
-    - ssh-keygen -f id_ed25519 -N ""
+    - whoami && pwd
+    # - ssh-keygen -f id_ed25519 -N ""
     - tofu validate
     - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
     - tofu show -no-color tfplan > tfplan.txt
@@ -24,6 +25,7 @@ plan infra:
 apply infra:
   stage: infra-apply
   script:
+    - whoami && pwd
     - ssh-keygen -f id_ed25519 -N ""
     # - sshpass -p "$PM_NODE_PASSWORD" ssh-copy-id -i ./id_ed25519.pub root@$PM_NODE_IP_ADDRESS
     - ssh-copy-id -i ./id_ed25519.pub tofu-user@$PM_NODE_IP_ADDRESS

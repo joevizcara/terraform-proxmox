@@ -18,7 +18,7 @@ pct create $VMID local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst \
   --hostname gitlab-runner \
   --password glrnr \
   --unprivileged 1 \
-  --cores 1 \
+  --cores 2 \
   --memory 512 \
   --swap 0 \
   --storage local-lvm \
@@ -33,7 +33,7 @@ sleep 7 && \
 pct exec $VMID -- apt update
 pct exec $VMID -- apt full-upgrade -y
 pct exec $VMID -- apt install curl -y
-pct exec $VMID -- apt install sshpass -y
+# pct exec $VMID -- apt install sshpass -y
 pct exec $VMID -- curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
 pct exec $VMID -- chmod +x install-opentofu.sh
 pct exec $VMID -- ./install-opentofu.sh --install-method deb
