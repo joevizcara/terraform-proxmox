@@ -1,4 +1,18 @@
 #!/usr/bin/env sh
+cat << 'EOF'
+╭────────────────────────────────────╮
+│   Proxmox GitOps - This script     │
+│    will manifest an Ubuntu LXC     │
+│     hosting GitLab Runner and      │
+│  OpenTofu to manage your Proxmox   │
+│ resources. Press Enter to proceed. │
+╰────────────────────────────────────╯
+EOF
+
+read -p ""
+echo The script is preparing your PVE.
+echo Please maintain this console open.
+sleep 3
 
 VMID=100
 EXISTING_VMIDS=$( ( qm list | awk 'NR>1 {print $1}' ; pct list | awk 'NR>1 {print $1}' ) | sort -nu )
@@ -18,7 +32,7 @@ pct create $VMID local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst \
   --hostname gitlab-runner \
   --password glrnr \
   --unprivileged 1 \
-  --cores 2 \
+  --cores 1 \
   --memory 512 \
   --swap 0 \
   --storage local-lvm \
