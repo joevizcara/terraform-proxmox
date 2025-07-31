@@ -1,6 +1,6 @@
 
 data "local_file" "ssh_public_key" {
-  filename = "/home/gitlab-runner/id_ed25519.pub"
+  filename = "$HOME/id_rsa.pub"
 }
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
