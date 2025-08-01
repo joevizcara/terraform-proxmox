@@ -62,7 +62,7 @@ pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
 adduser --disabled-password --gecos "" tofu-user && echo 'tofu-user:tofu-password' | chpasswd && pveum user add tofu-user@pam
 usermod -u 0 -o tofu-user
-pct exec $VMID -- sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub tofu-user@192.168.1.30 -o StrictHostKeyChecking=no
+pct exec $VMID -- bash -c "sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no tofu-user@192.168.1.30"
 pct exec $VMID -- reboot
 
 pveum group add tofu-group
