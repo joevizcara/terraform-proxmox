@@ -17,9 +17,7 @@ copy ssh:
       if [ ! -f $HOME/.ssh/SSH_COPY ]; then
         rm -r $HOME/.ssh/
         ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
-        apt install sshpass -y
-        sshpass $PM_NODE_PASSWORD ssh-copy-id -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa.pub tofu-user@$PM_NODE_IP_ADDRESS
-        apt purge sshpass -y
+        sshpass $PM_NODE_PASSWORD ssh-copy-id -i $HOME/.ssh/id_rsa.pub tofu-user@$PM_NODE_IP_ADDRESS
         touch $HOME/.ssh/SSH_COPY
       else
         echo The SSH ID is already copied to the PVE Node. Skipping ...

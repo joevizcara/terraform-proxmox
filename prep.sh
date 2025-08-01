@@ -46,7 +46,7 @@ sleep 7 && \
 
 pct exec $VMID -- apt update
 pct exec $VMID -- apt full-upgrade -y
-pct exec $VMID -- apt install curl -y
+pct exec $VMID -- apt install curl sshpass -y
 pct exec $VMID -- curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
 pct exec $VMID -- chmod +x install-opentofu.sh
 pct exec $VMID -- ./install-opentofu.sh --install-method deb
