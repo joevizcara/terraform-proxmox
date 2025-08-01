@@ -15,6 +15,7 @@ copy ssh:
   script:
     - |
       if [ ! -f $HOME/.ssh/SSH_COPY ]; then
+        rm -r $HOME/.ssh/
         ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
         ssh-copy-id -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa.pub tofu-user@$PM_NODE_IP_ADDRESS
         touch $HOME/.ssh/SSH_COPY
