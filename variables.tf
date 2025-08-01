@@ -14,31 +14,31 @@ variable "pm_api_token_id" {
 }
 
 variable "endpoint_url" {
-  type = string
+  type    = string
   default = "192.168.1.30/24"
 }
 
 variable "gateway_url" {
-  type = string
+  type    = string
   default = "192.168.1.1"
 }
 
 variable "vm_name" {
-  type = string
+  type    = string
   default = "ubuntu-cloud-init"
 }
 
 variable "pm_node" {
-  type = string
+  type    = string
   default = "neo"
 }
 
 variable "vm_cores" {
-  type = number
+  type    = number
   default = 2
 }
 
 variable "vm_memory" {
-  type = number
+  type    = number
   default = 2048
 }

@@ -6,21 +6,21 @@ cache:
     - tfplan
 
 stages:
-  - ssh-copy
+  # - ssh-copy
   - infra-plan
   - infra-apply
 
-copy ssh:
-  stage: ssh-copy
-  script:
-    - |
-      if [ ! -f $HOME/.ssh/SSH_COPY ]; then
-        ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
-        ssh-copy-id -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa.pub tofu-user@$PM_NODE_IP_ADDRESS
-        touch $HOME/.ssh/SSH_COPY
-      else
-        echo The SSH ID is already copied to the PVE Node. Skipping ...
-      fi
+# copy ssh:
+#   stage: ssh-copy
+#   script:
+#     - |
+#       if [ ! -f $HOME/.ssh/SSH_COPY ]; then
+#         ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
+#         ssh-copy-id -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa.pub tofu-user@$PM_NODE_IP_ADDRESS
+#         touch $HOME/.ssh/SSH_COPY
+#       else
+#         echo The SSH ID is already copied to the PVE Node. Skipping ...
+#       fi
 
 plan infra:
   stage: infra-plan

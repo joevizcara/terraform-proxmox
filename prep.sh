@@ -33,12 +33,12 @@ pct create $VMID local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst \
   --password glrnr \
   --unprivileged 1 \
   --cores 1 \
-  --memory 512 \
+  --memory 256 \
   --swap 0 \
   --storage local-lvm \
-  --rootfs 8 \
-  --net0 name=eth0,bridge=vmbr0,ip=dhcp \
-  --onboot 1
+  --rootfs 4 \
+  --net0 name=eth0,bridge=vmbr0,ip=dhcp
+  # --onboot 1
 
 pct start $VMID
 
