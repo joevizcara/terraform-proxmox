@@ -12,6 +12,7 @@ provider "proxmox" {
   api_token = "${var.pm_api_token_id}=${var.pm_api_token_secret}"
   insecure  = true
   username = "tofu-user@pam"
+  password = "1"
 
   ssh {
     agent = true
