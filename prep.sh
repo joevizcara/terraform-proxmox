@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
 cat << 'EOF'
 ╭────────────────────────────────────╮
 │   Proxmox GitOps - This script     │
@@ -56,9 +57,10 @@ pct exec $VMID -- ./script.deb.sh
 pct exec $VMID -- apt install gitlab-runner -y
 read -p "Enter the Registration Token of your GitLab Project: " PROJECT_REGISTRATION_TOKEN && \
 pct exec $VMID -- gitlab-runner register --non-interactive --url "https://gitlab.com/" --registration-token "$PROJECT_REGISTRATION_TOKEN" --executor "shell" --description "GitLab Runner on Proxmox Ubuntu LTS LXC" --maintenance-note "" --tag-list "" --run-untagged="true" --locked="false" --access-level="not_protected"
+pct exec $VMID -- mkdir -p /home/gitlab-runner/.ssh/ && ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
+adduser --disabled-password --gecos "" tofu-user && echo 'tofu-user:tofu-password' | chpasswd && pveum user add tofu-user@pam
+pct exec $VMID -- sshpass -p tofu-password ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub tofu-user@192.168.1.30
 pct exec $VMID -- reboot
-
-pveum user add tofu-user@pam
 
 pveum group add tofu-group
 
