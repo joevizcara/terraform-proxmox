@@ -14,7 +14,7 @@ provider "proxmox" {
 
   ssh {
     agent = true
-    username = "tofu-user"
-    password = "tofu-password"
+    # username = "tofu-user"
+    # password = "tofu-password"
   }
 }
