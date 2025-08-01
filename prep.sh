@@ -13,7 +13,7 @@ EOF
 read -p ""
 echo The script is preparing your PVE.
 echo Please maintain this console open.
-sleep 3
+sleep 2
 
 VMID=100
 EXISTING_VMIDS=$( ( qm list | awk 'NR>1 {print $1}' ; pct list | awk 'NR>1 {print $1}' ) | sort -nu )
@@ -55,7 +55,7 @@ pct exec $VMID -- wget https://packages.gitlab.com/install/repositories/runner/g
 pct exec $VMID -- chmod +x script.deb.sh
 pct exec $VMID -- ./script.deb.sh
 pct exec $VMID -- apt install gitlab-runner -y
-read -p "Enter the Registration Token of your GitLab Project: " PROJECT_REGISTRATION_TOKEN && \
+read -p "Enter the Authentication Token of your GitLab Project: " PROJECT_REGISTRATION_TOKEN && \
 pct exec $VMID -- gitlab-runner register --non-interactive --url "https://gitlab.com/" --registration-token "$PROJECT_REGISTRATION_TOKEN" --executor "shell" --description "GitLab Runner on Proxmox Ubuntu LTS LXC" --maintenance-note "" --tag-list "" --run-untagged="true" --locked="false" --access-level="not_protected"
 pct exec $VMID -- mkdir -p /home/gitlab-runner/.ssh/
 pct exec $VMID -- ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
@@ -78,8 +78,9 @@ pvesm set local --content import,rootdir,images,iso,vztmpl,backup,snippets
 
 cat << 'EOF'
 
-- this script has created a new lxc container with vmid $VMID that is hosting opentofu
-and a registered gitlab runner to manage your proxmox virtual infrastructure.
-- the proxmox api token is in plain text at ./tofu-token.txt.
-- consider deleting that file after saving it into somewhere secure.
+- This script has created a new LXC container with vmid $VMID that is hosting OpenTofu
+  and a registered GitLab Runner to manage your Proxmox virtual infrastructure.
+- The Proxmox API token is in plain text at ./tofu-token.txt.
+- Consider deleting that file after saving it into somewhere secure.
+
 EOF
