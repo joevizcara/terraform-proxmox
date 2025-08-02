@@ -81,8 +81,7 @@ pvesm set local --content import,rootdir,images,iso,vztmpl,backup,snippets
 
 
 cat << 'EOF'
-
-- This script has created a new LXC container with vmid $VMID that is hosting OpenTofu
+- This script has created a new LXC container with (gitlab-runner) that is hosting OpenTofu
   and a registered GitLab Runner to manage your Proxmox virtual infrastructure.
 - The Proxmox API token is in plain text at ./tofu-token.txt.
 - Consider deleting that file after saving it into somewhere secure.
