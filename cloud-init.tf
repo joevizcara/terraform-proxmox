@@ -38,7 +38,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = "local-lvm"
-    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image[0].id
+    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
