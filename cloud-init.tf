@@ -41,7 +41,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
 resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   content_type = "snippets"
   datastore_id = "local"
-  node_name    = "pve"
+  node_name    = var.pm_node
 
   source_raw {
     data = <<-EOF
