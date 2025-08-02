@@ -47,7 +47,7 @@ sleep 7 && \
 
 pct exec $VMID -- apt update
 pct exec $VMID -- apt full-upgrade -y
-pct exec $VMID -- apt install curl sshpass -y
+pct exec $VMID -- apt install curl sshpass sudo -y
 pct exec $VMID -- curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
 pct exec $VMID -- chmod +x install-opentofu.sh
 pct exec $VMID -- ./install-opentofu.sh --install-method deb
@@ -60,11 +60,19 @@ pct exec $VMID -- gitlab-runner register --non-interactive --url "https://gitlab
 pct exec $VMID -- mkdir -p /home/gitlab-runner/.ssh/
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
+
+useradd -m tofu-user
+
+cat << EOF > /etc/sudoers.d/tofu-user
+tofu-user ALL=(root) NOPASSWD: /sbin/pvesm
+tofu-user ALL=(root) NOPASSWD: /sbin/qm
+tofu-user ALL=(root) NOPASSWD: /usr/bin/tee /var/lib/vz/*
+EOF
+
 pct exec $VMID -- bash -c "sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no tofu-user@192.168.1.30"
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- cp /home/gitlab-runner/.ssh/* .ssh
-adduser --disabled-password --gecos "" tofu-user && echo 'tofu-user:tofu-password' | chpasswd
-usermod -u 0 -o tofu-user
+
 pct exec $VMID -- reboot
 
 pveum user add tofu-user@pam
