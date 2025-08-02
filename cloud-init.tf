@@ -97,14 +97,14 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
 }
 
-resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  content_type = "import"
-  datastore_id = "local"
-  node_name    = var.pm_node
-  url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-  # need to rename the file to *.qcow2 to indicate the actual file format for import
-  file_name = "noble-server-cloudimg-amd64.qcow2"
-}
+# resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
+#   content_type = "import"
+#   datastore_id = "local"
+#   node_name    = var.pm_node
+#   url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
+#   # need to rename the file to *.qcow2 to indicate the actual file format for import
+#   file_name = "noble-server-cloudimg-amd64.qcow2"
+# }
 
 output "vm_ipv4_address" {
   value = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
