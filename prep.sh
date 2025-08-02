@@ -71,8 +71,7 @@ EOF
 
 pct exec $VMID -- bash -c "sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no tofu-user@192.168.1.30"
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
-pct exec $VMID -- cp /home/gitlab-runner/.ssh/* .ssh
-
+pct exec $VMID -- bash -c "cp /home/gitlab-runner/.ssh/* .ssh"
 pct exec $VMID -- reboot
 
 pveum user add tofu-user@pam
