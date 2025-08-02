@@ -4,7 +4,7 @@ cat << 'EOF'
 ╭────────────────────────────────────╮
 │   Proxmox GitOps - This script     │
 │    will manifest an Ubuntu LXC     │
-|   that hosts GitLab Runner and     │
+│   that hosts GitLab Runner and     │
 │  OpenTofu to manage your Proxmox   │
 │ resources. Press Enter to proceed. │
 ╰────────────────────────────────────╯
@@ -47,7 +47,7 @@ sleep 7 && \
 
 pct exec $VMID -- apt update
 pct exec $VMID -- apt full-upgrade -y
-pct exec $VMID -- apt install curl sshpass sudo -y
+pct exec $VMID -- apt install curl sshpass -y
 pct exec $VMID -- curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
 pct exec $VMID -- chmod +x install-opentofu.sh
 pct exec $VMID -- ./install-opentofu.sh --install-method deb
@@ -55,11 +55,13 @@ pct exec $VMID -- wget https://packages.gitlab.com/install/repositories/runner/g
 pct exec $VMID -- chmod +x script.deb.sh
 pct exec $VMID -- ./script.deb.sh
 pct exec $VMID -- apt install gitlab-runner -y
-read -p "Enter the Authentication Token of your GitLab Project: " PROJECT_REGISTRATION_TOKEN && \
+read -p "Enter the Authentication Token of your GitLab Project Runner: " PROJECT_REGISTRATION_TOKEN && \
 pct exec $VMID -- gitlab-runner register --non-interactive --url "https://gitlab.com/" --registration-token "$PROJECT_REGISTRATION_TOKEN" --executor "shell" --description "GitLab Runner on Proxmox Ubuntu LTS LXC" --maintenance-note "" --tag-list "" --run-untagged="true" --locked="false" --access-level="not_protected"
 pct exec $VMID -- mkdir -p /home/gitlab-runner/.ssh/
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
+
+apt update && apt install sudo -y
 
 useradd -m tofu-user
 
