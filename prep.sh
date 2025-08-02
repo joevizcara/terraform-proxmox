@@ -31,7 +31,7 @@ pveam download local ubuntu-24.04-standard_24.04-2_amd64.tar.zst
 
 pct create $VMID local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst \
   --hostname gitlab-runner \
-  --password glrnr \
+  --password changeme \
   --unprivileged 1 \
   --cores 1 \
   --memory 256 \
@@ -61,20 +61,20 @@ pct exec $VMID -- mkdir -p /home/gitlab-runner/.ssh/
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
 
-apt update && apt install sudo -y
+# apt update && apt install sudo -y
 
-useradd -m tofu-user
+# useradd -m tofu-user
 
-cat << EOF > /etc/sudoers.d/tofu-user
-tofu-user ALL=(root) NOPASSWD: /sbin/pvesm
-tofu-user ALL=(root) NOPASSWD: /sbin/qm
-tofu-user ALL=(root) NOPASSWD: /usr/bin/tee /var/lib/vz/*
-tofu-user ALL=(root) NOPASSWD: /etc/$HOSTNAME/priv/authorized_keys
-EOF
+# cat << EOF > /etc/sudoers.d/tofu-user
+# tofu-user ALL=(root) NOPASSWD: /sbin/pvesm
+# tofu-user ALL=(root) NOPASSWD: /sbin/qm
+# tofu-user ALL=(root) NOPASSWD: /usr/bin/tee /var/lib/vz/*
+# tofu-user ALL=(root) NOPASSWD: /etc/$HOSTNAME/priv/authorized_keys
+# EOF
 
 NODE_IPA=$(awk 'NR==2 {print $1}' /etc/hosts)
 
-pct exec $VMID -- bash -c "sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no tofu-user@$NODE_IPA"
+pct exec $VMID -- bash -c "ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@$NODE_IPA"
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- bash -c "cp /home/gitlab-runner/.ssh/* .ssh"
 pct exec $VMID -- reboot
@@ -93,7 +93,7 @@ pveum acl modify / -group tofu-group -role tofu-role
 
 pvesm set local --content import,rootdir,images,iso,vztmpl,backup,snippets
 
-echo -e "\nGitLab Runner LXC\nun: root\npw: glrnr" >> credentials.txt
+echo -e "\nGitLab Runner LXC\nun: root\npw: changeme\n" >> credentials.txt
 
 cat << 'EOF'
 - This script has created a new LXC (gitlab-runner) that is hosting OpenTofu

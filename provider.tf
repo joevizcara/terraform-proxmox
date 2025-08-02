@@ -14,7 +14,7 @@ provider "proxmox" {
 
   ssh {
     agent       = false
-    username    = "tofu-user"
+    username    = "root"
     private_key = file("/home/gitlab-runner/.ssh/id_rsa")
   }
 }
