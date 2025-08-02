@@ -1,7 +1,7 @@
 
 data "external" "file_check" {
   program = ["bash", "-c", <<EOT
-    ssh root@$192.168.1.30 "test -f /var/lib/vz/import/noble-server-cloudimg-amd64.qcow2 && echo '{\"exists\": true}' || echo '{\"exists\": false}'"
+    ssh tofu-user@$192.168.1.30 "test -f /var/lib/vz/import/noble-server-cloudimg-amd64.qcow2 && echo '{\"exists\": true}' || echo '{\"exists\": false}'"
   EOT
   ]
 }
