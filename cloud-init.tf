@@ -1,15 +1,7 @@
 
-data "external" "file_check" {
-  program = ["bash", "-c", <<EOT
-    ssh tofu-user@192.168.1.30 "test -f /var/lib/vz/import/noble-server-cloudimg-amd64.qcow2 && echo '{\"exists\": \"true\"}' || echo '{\"exists\": \"false\"}'"
-  EOT
-  ]
-}
-
 
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  count        = data.external.file_check.result.exists == "true" ? 0 : 1
   content_type = "import"
   datastore_id = "local"
   node_name    = var.pm_node
@@ -38,8 +30,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = "local-lvm"
-    # import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
-    import_from = data.external.file_check.result.exists == "true" ? "local:noble-server-cloudimg-amd64.qcow2" : proxmox_virtual_environment_download_file.ubuntu_cloud_image[0].id
+    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
