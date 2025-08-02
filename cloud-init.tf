@@ -1,4 +1,31 @@
 
+resource "null_resource" "check_file" {
+  provisioner "local-exec" {
+    command = <<EOT
+      # Replace with your Proxmox API or SSH command to check file existence
+      ssh root@${var.pm_node} "test -f /var/lib/vz/import/noble-server-cloudimg-amd64.qcow2 && echo 'exists' || echo 'not_exists'" > file_check.txt
+    EOT
+  }
+}
+
+# Read the result of the file check
+data "local_file" "file_check" {
+  filename   = "file_check.txt"
+  depends_on = [null_resource.check_file]
+}
+
+resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
+  count        = data.local_file.file_check.content == "not_exists" ? 1 : 0
+  content_type = "import"
+  datastore_id = "local"
+  node_name    = var.pm_node
+  url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
+  overwrite    = false
+  # need to rename the file to *.qcow2 to indicate the actual file format for import
+  file_name = "noble-server-cloudimg-amd64.qcow2"
+}
+
+
 data "local_file" "ssh_public_key" {
   filename = "/home/gitlab-runner/.ssh/id_rsa.pub"
 }
@@ -95,16 +122,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     bridge = "vmbr0"
   }
 
-}
-
-resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  content_type = "import"
-  datastore_id = "local"
-  node_name    = var.pm_node
-  url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-  overwrite    = false
-  # need to rename the file to *.qcow2 to indicate the actual file format for import
-  file_name = "noble-server-cloudimg-amd64.qcow2"
 }
 
 output "vm_ipv4_address" {
