@@ -9,7 +9,7 @@ data "external" "file_check" {
 
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  count        = data.external.file_check.result.exists ? 0 : 1
+  count        = data.external.file_check.result.exists == "true" ? 0 : 1
   content_type = "import"
   datastore_id = "local"
   node_name    = var.pm_node
