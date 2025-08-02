@@ -6,8 +6,14 @@ cache:
     - tfplan
 
 stages:
+  - infra-destroy
   - infra-plan
   - infra-apply
+
+destroy infra:
+  stage: infra-destroy
+  script:
+    - tofu destroy -auto-approve
 
 plan infra:
   stage: infra-plan
