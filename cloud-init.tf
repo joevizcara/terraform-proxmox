@@ -11,8 +11,8 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    hostname: test-ubuntu
-    timezone: America/Toronto
+    hostname: ubuntu-user
+    timezone: Asia/Manila
     users:
       - default
       - name: ubuntu
@@ -37,8 +37,25 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   }
 }
 
+
+resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = "pve"
+
+  source_raw {
+    data = <<-EOF
+    #cloud-config
+    local-hostname: ubuntu-meta
+    EOF
+
+    file_name = "meta-data-cloud-config.yaml"
+  }
+}
+
+
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  name      = "test-ubuntu"
+  name      = "ubuntu-ci"
   node_name = var.pm_node
 
   agent {
@@ -59,7 +76,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 20
+    size         = 16
   }
 
   initialization {
@@ -70,6 +87,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     }
 
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+    meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
+
   }
 
   network_device {
