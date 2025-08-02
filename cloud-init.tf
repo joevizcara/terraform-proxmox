@@ -38,7 +38,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = "local-lvm"
-    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
+    # import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
+    import_from = data.external.file_check.result.exists == "true" ? "local:noble-server-cloudimg-amd64.qcow2" : proxmox_virtual_environment_download_file.ubuntu_cloud_image[0].id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
