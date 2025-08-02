@@ -3,7 +3,7 @@ resource "null_resource" "check_file" {
   provisioner "local-exec" {
     command = <<EOT
       # Replace with your Proxmox API or SSH command to check file existence
-      ssh root@${var.pm_node} "test -f /var/lib/vz/import/noble-server-cloudimg-amd64.qcow2 && echo 'exists' || echo 'not_exists'" > file_check.txt
+      ssh root@${var.pm_node} "test -f /var/lib/vz/import/noble-server-cloudimg-amd64.qcow2 && echo 'exists' || echo 'non-existent'" > file_check.txt
     EOT
   }
 }
@@ -15,7 +15,7 @@ data "local_file" "file_check" {
 }
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  count        = data.local_file.file_check.content == "not_exists" ? 1 : 0
+  count        = data.local_file.file_check.content == "non-existent" ? 1 : 0
   content_type = "import"
   datastore_id = "local"
   node_name    = var.pm_node
@@ -99,7 +99,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = "local-lvm"
-    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
+    import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image[0].id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
