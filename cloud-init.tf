@@ -6,26 +6,27 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   datastore_id = "local"
   node_name    = var.pm_node
   url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-  overwrite    = false
+  overwrite    = true
   # need to rename the file to *.qcow2 to indicate the actual file format for import
   file_name = "noble-server-cloudimg-amd64.qcow2"
 }
 
 
+
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  name      = "ubuntu-ci"
+  for_each = var.vm_configs
+
+
+  vm_id = each.value.vm_id
+  vm_name = each.value.vm_name
+  vm_cores = each.value.vm_cores
+  vm_memory = each.value.vm_memory
+  vm_state = each.value.vm_state
+
   node_name = var.pm_node
 
   agent {
     enabled = true
-  }
-
-  cpu {
-    cores = 2
-  }
-
-  memory {
-    dedicated = 2048
   }
 
   disk {
@@ -34,17 +35,17 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 16
+    size         = 24
   }
 
   initialization {
     ip_config {
       ipv4 {
-        address = "dhcp"
+        vm_ip_address = each.value.vm_ip_address
       }
     }
 
-    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+    # user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
     meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
@@ -52,9 +53,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     bridge = "vmbr0"
   }
 }
-
-
-
 
 data "local_file" "ssh_public_key" {
   filename = "/home/gitlab-runner/.ssh/id_rsa.pub"
