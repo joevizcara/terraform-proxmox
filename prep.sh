@@ -69,6 +69,7 @@ cat << EOF > /etc/sudoers.d/tofu-user
 tofu-user ALL=(root) NOPASSWD: /sbin/pvesm
 tofu-user ALL=(root) NOPASSWD: /sbin/qm
 tofu-user ALL=(root) NOPASSWD: /usr/bin/tee /var/lib/vz/*
+tofu-user ALL=(root) NOPASSWD: /etc/$HOSTNAME/priv/authorized_keys
 EOF
 
 NODE_IPA=$(awk 'NR==2 {print $1}' /etc/hosts)
