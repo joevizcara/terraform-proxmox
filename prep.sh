@@ -60,9 +60,11 @@ pct exec $VMID -- gitlab-runner register --non-interactive --url "https://gitlab
 pct exec $VMID -- mkdir -p /home/gitlab-runner/.ssh/
 pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
 pct exec $VMID -- ssh-keygen -t rsa -f /home/gitlab-runner/.ssh/id_rsa -N ""
+pct exec $VMID -- bash -c "sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no tofu-user@192.168.1.30"
+pct exec $VMID -- chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
+pct exec $VMID -- cp /home/gitlab-runner/.ssh/* .ssh
 adduser --disabled-password --gecos "" tofu-user && echo 'tofu-user:tofu-password' | chpasswd
 usermod -u 0 -o tofu-user
-pct exec $VMID -- bash -c "sshpass -p 'tofu-password' ssh-copy-id -i /home/gitlab-runner/.ssh/id_rsa.pub -o StrictHostKeyChecking=no tofu-user@192.168.1.30"
 pct exec $VMID -- reboot
 
 pveum user add tofu-user@pam

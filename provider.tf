@@ -13,8 +13,7 @@ provider "proxmox" {
   insecure  = true
 
   ssh {
-    agent = true
-    username = "tofu-user"
-    password = "tofu-password"
+    agent = false
+    private_key = file("/home/gitlab-runner/.ssh/id_rsa")
   }
 }
