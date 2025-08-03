@@ -107,5 +107,5 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
 }
 
 output "vm_ipv4_address" {
-  value = proxmox_virtual_environment_vm.ubuntu_vm[each.key]
+  value = proxmox_virtual_environment_vm.ubuntu_vm[each.address]
 }
