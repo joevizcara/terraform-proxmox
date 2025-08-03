@@ -5,7 +5,7 @@ variable "pm_api_token_secret" {
 
 variable "pm_api_url" {
   type    = string
-  default = "https://192.168.122.137:8006/api2/json"
+  default = "https://192.168.1.30:8006/api2/json"
 }
 
 variable "pm_api_token_id" {
@@ -15,18 +15,18 @@ variable "pm_api_token_id" {
 
 variable "endpoint_url" {
   type    = string
-  default = "192.168.122.137/24"
+  default = "192.168.1.30/24"
 }
 
 variable "gateway_url" {
   type    = string
-  default = "192.168.122.1"
+  default = "192.168.1.1"
 }
 
 
 variable "pm_node" {
   type    = string
-  default = "pve"
+  default = "neo"
 }
 
 variable "vm_configs" {
@@ -39,8 +39,8 @@ variable "vm_configs" {
     address   = string
   }))
   default = {
-    "master-1" = { vm_id = 101, name = "Master-1", cores = 2, dedicated = 4096, started = true, address = "192.168.122.101/24" }
-    "worker-1" = { vm_id = 201, name = "Worker-1", cores = 1, dedicated = 2048, started = false, address = "192.168.122.201/24" }
-    "worker-2" = { vm_id = 202, name = "Worker-2", cores = 1, dedicated = 2048, started = false, address = "192.168.122.202/24" }
+    "master-1" = { vm_id = 101, name = "Master-1", cores = 2, dedicated = 4096, started = false, address = "192.168.1.101/24" }
+    # "worker-1" = { vm_id = 201, name = "Worker-1", cores = 1, dedicated = 2048, started = false, address = "192.168.1.201/24" }
+    # "worker-2" = { vm_id = 202, name = "Worker-2", cores = 1, dedicated = 2048, started = false, address = "192.168.1.202/24" }
   }
 }
