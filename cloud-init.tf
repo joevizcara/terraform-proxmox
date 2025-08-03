@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   for_each = var.vm_configs
 
-  vm_id     = each.value.name
+  vm_id     = each.value.vm_id
   name      = each.value.name
   started   = each.value.started
 
