@@ -96,9 +96,8 @@ pvesm set local --content import,rootdir,images,iso,vztmpl,backup,snippets
 echo -e "\nGitLab Runner LXC\nun: root\npw: changeme\n" >> credentials.txt
 
 cat << 'EOF'
-- This script has created a new LXC (gitlab-runner) that is hosting OpenTofu
-  and a registered GitLab Runner to manage your Proxmox virtual infrastructure.
-- The Proxmox API token and runner LXC credentials are in plain text at ./credentials.txt.
-- Consider deleting that file after saving it into somewhere secure.
-
+╭──────────────────────────────────────────────────────────────────────────────────────────╮
+│ The Proxmox API token and runner LXC credentials are in plain text at ./credentials.txt. │
+│ Consider deleting that file after saving it into somewhere secure.                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────╯
 EOF
