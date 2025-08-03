@@ -17,7 +17,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   node_name = var.pm_node
 
-
   agent {
     enabled = true
   }
