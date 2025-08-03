@@ -12,15 +12,16 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   for_each = var.vm_configs
 
   vm_id     = each.value.name
-  name   = each.value.name
-  cores  = each.value.cores
-  memory = each.value.memory
-  started  = each.value.started
-
+  name      = each.value.name
+  started   = each.value.started
   node_name = var.pm_node
 
   agent {
     enabled = true
+  }
+
+  cpu {
+    cores = each.value.cores
   }
 
   disk {
@@ -43,6 +44,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
+  memory {
+    dedicated = each.value.dedicated
+  }
   network_device {
     bridge = "vmbr0"
   }
