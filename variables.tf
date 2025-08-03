@@ -31,12 +31,12 @@ variable "pm_node" {
 
 variable "vm_configs" {
   type = map(object({
-    vm_id   = number
-    name    = string
-    cores   = number
-    memory  = number
-    started = bool
-    address = string
+    vm_id     = number
+    name      = string
+    cores     = number
+    dedicated = number
+    started   = bool
+    address   = string
   }))
   default = {
     "master-1" = { vm_id = 101, name = "Master 1", cores = 2, dedicated = 4096, started = true, address = "192.168.122.101" }

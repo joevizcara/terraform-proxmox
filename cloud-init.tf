@@ -47,6 +47,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   memory {
     dedicated = each.value.dedicated
   }
+
   network_device {
     bridge = "vmbr0"
   }
