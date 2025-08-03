@@ -106,6 +106,6 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   }
 }
 
-output "initialization" {
-  value = proxmox_virtual_environment_vm.ubuntu_vm[address]
+output "ipv4_addresses" {
+  value = proxmox_virtual_environment_vm.ubuntu_vm[each.value.address]
 }
