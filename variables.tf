@@ -31,16 +31,16 @@ variable "pm_node" {
 
 variable "vm_configs" {
   type = map(object({
-    vm_id         = number
-    vm_name       = string
-    vm_cores      = number
-    vm_memory     = number
-    vm_started      = bool
-    vm_ip_address = string
+    vm_id   = number
+    name    = string
+    cores   = number
+    memory  = number
+    started = bool
+    address = string
   }))
   default = {
-    "master-1" = { vm_id = 101, vm_name = "Master 1", vm_cores = 2, vm_memory = 4096, vm_started = true, vm_ip_address = "192.168.122.101" }
-    "worker-1" = { vm_id = 201, vm_name = "Worker 1", vm_cores = 1, vm_memory = 2048, vm_started = false, vm_ip_address = "192.168.122.201" }
-    "worker-2" = { vm_id = 202, vm_name = "Worker 2", vm_cores = 1, vm_memory = 2048, vm_started = false, vm_ip_address = "192.168.122.202" }
+    "master-1" = { vm_id = 101, name = "Master 1", cores = 2, memory = 4096, started = true, address = "192.168.122.101" }
+    "worker-1" = { vm_id = 201, name = "Worker 1", cores = 1, memory = 2048, started = false, address = "192.168.122.201" }
+    "worker-2" = { vm_id = 202, name = "Worker 2", cores = 1, memory = 2048, started = false, address = "192.168.122.202" }
   }
 }

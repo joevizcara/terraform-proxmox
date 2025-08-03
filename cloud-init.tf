@@ -11,11 +11,11 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   for_each = var.vm_configs
 
-  vm_id     = each.value.vm_id
-  vm_name   = each.value.vm_name
-  vm_cores  = each.value.vm_cores
-  vm_memory = each.value.vm_memory
-  vm_started  = each.value.vm_started
+  vm_id     = each.value.name
+  name   = each.value.name
+  cores  = each.value.cores
+  memory = each.value.memory
+  started  = each.value.started
 
   node_name = var.pm_node
 
@@ -35,7 +35,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   initialization {
     ip_config {
       ipv4 {
-        vm_ip_address = each.value.vm_ip_address
+        address = each.value.address
       }
     }
 
