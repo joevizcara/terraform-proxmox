@@ -5,7 +5,7 @@ variable "pm_api_token_secret" {
 
 variable "pm_api_url" {
   type    = string
-  default = "https://192.168.122.34:8006/api2/json"
+  default = "https://192.168.122.137:8006/api2/json"
 }
 
 variable "pm_api_token_id" {
@@ -15,7 +15,7 @@ variable "pm_api_token_id" {
 
 variable "endpoint_url" {
   type    = string
-  default = "192.168.122.34/24"
+  default = "192.168.122.137/24"
 }
 
 variable "gateway_url" {
