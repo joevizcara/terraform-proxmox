@@ -14,7 +14,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   vm_id     = each.value.name
   name      = each.value.name
   started   = each.value.started
+
   node_name = var.pm_node
+
 
   agent {
     enabled = true
@@ -107,5 +109,6 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
 }
 
 output "ipv4_addresses" {
-  value = proxmox_virtual_environment_vm.ubuntu_vm[each.value.address]
+  # Use a map to collect the VM names as keys and their IPv4 addresses as values
+  value = { for name, vm in proxmox_virtual_environment_vm.ubuntu_vm : name => vm.initialization[0].ip_config[0].ipv4[0].address }
 }
