@@ -41,8 +41,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
       }
     }
 
-    # user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
-    meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
+    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+    # meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
   memory {
