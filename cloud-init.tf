@@ -1,6 +1,3 @@
-
-
-
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   content_type = "import"
   datastore_id = "local"
@@ -10,8 +7,6 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   # need to rename the file to *.qcow2 to indicate the actual file format for import
   file_name = "noble-server-cloudimg-amd64.qcow2"
 }
-
-
 
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   for_each = var.vm_configs
@@ -92,7 +87,6 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   }
 }
 
-
 resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   content_type = "snippets"
   datastore_id = "local"
@@ -107,9 +101,6 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
     file_name = "meta-data-cloud-config.yaml"
   }
 }
-
-
-
 
 output "vm_ipv4_address" {
   value = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
