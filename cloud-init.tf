@@ -66,7 +66,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    hostname: ubuntu-user
+    hostname: k3s
     timezone: Asia/Manila
     users:
       - default
@@ -79,12 +79,12 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
         sudo: ALL=(ALL) NOPASSWD:ALL
     package_update: true
     packages:
-      - qemu-guest-agent
+      # - qemu-guest-agent
       - net-tools
       - curl
     runcmd:
-      - systemctl enable qemu-guest-agent
-      - systemctl start qemu-guest-agent
+      # - systemctl enable qemu-guest-agent
+      # - systemctl start qemu-guest-agent
       - echo "done" > /tmp/cloud-config.done
     EOF
 
