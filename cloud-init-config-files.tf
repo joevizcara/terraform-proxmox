@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_file" "user_data_cloud_config_master_1" {
+resource "proxmox_virtual_environment_file" "_master_1" {
 
   content_type = "snippets"
   datastore_id = "local"
@@ -29,7 +29,6 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config_master_1" {
       - snap remove core22
       - snap remove snapd
       - apt purge snapd -y
-      - apt update && apt full-upgrade -y
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 
@@ -53,7 +52,7 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config_master_1" {
   }
 }
 
-resource "proxmox_virtual_environment_file" "user_data_cloud_config_worker_1" {
+resource "proxmox_virtual_environment_file" "_worker_1" {
 
   content_type = "snippets"
   datastore_id = "local"
@@ -84,7 +83,6 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config_worker_1" {
       - snap remove core22
       - snap remove snapd
       - apt purge snapd -y
-      - apt update && apt full-upgrade -y
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 
@@ -108,7 +106,7 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config_worker_1" {
   }
 }
 
-resource "proxmox_virtual_environment_file" "user_data_cloud_config_worker_2" {
+resource "proxmox_virtual_environment_file" "_worker_2" {
 
   content_type = "snippets"
   datastore_id = "local"
@@ -139,7 +137,6 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config_worker_2" {
       - snap remove core22
       - snap remove snapd
       - apt purge snapd -y
-      - apt update && apt full-upgrade -y
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 
