@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     }
 
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
-    # meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
+    meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
   memory {
@@ -100,7 +100,7 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    local-hostname: ubuntu-meta
+    local-hostname: k3s
     EOF
 
     file_name = "meta-data-cloud-config.yaml"
