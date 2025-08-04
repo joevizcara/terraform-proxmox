@@ -2,10 +2,10 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   content_type = "import"
   datastore_id = "local"
   node_name    = var.pm_node
-  url          = "https://cloud-images.ubuntu.com/minimal/releases/noble/release/ubuntu-24.04-minimal-cloudimg-amd64.img"
+  url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
   overwrite    = true
   # need to rename the file to *.qcow2 to indicate the actual file format for import
-  file_name = "ubuntu-24.04-minimal-cloudimg-amd64.qcow2"
+  file_name = "noble-server-cloudimg-amd64.qcow2"
 }
 
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
-  # machine = "q35"
+  machine = "q35"
 
   memory {
     dedicated = each.value.dedicated
@@ -99,6 +99,9 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     runcmd:
       - systemctl enable qemu-guest-agent
       - systemctl start qemu-guest-agent
+      - snap remove core22
+      - snap remove snapd
+      - apt purge snapd -y
       - apt update && apt full-upgrade -y
       - echo "done" > /tmp/cloud-config.done
     EOF
