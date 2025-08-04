@@ -38,8 +38,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
       }
     }
 
-    for_each = var.config_files
-
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config[each.value.hostname].id
     meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config[each.value.hostname].id
   }
