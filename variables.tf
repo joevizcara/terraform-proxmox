@@ -38,7 +38,7 @@ variable "vm_configs" {
     started                = bool
     address                = string
     user_data_cloud_config = string
-    meta_data_cloud_config = string
+    meta_data_cloud_config = any
   }))
   default = {
 
