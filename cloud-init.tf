@@ -83,12 +83,11 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
       - qemu-guest-agent
       - net-tools
       - curl
-      - hyfetch
     runcmd:
       - systemctl enable qemu-guest-agent
       - systemctl start qemu-guest-agent
-      - echo "done" > /tmp/cloud-config.done
       - apt update && apt full-upgrade -y
+      - echo "done" > /tmp/cloud-config.done
     EOF
 
     file_name = "user-data-cloud-config.yaml"
