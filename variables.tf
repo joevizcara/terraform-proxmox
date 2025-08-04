@@ -38,7 +38,7 @@ variable "vm_configs" {
     started                = bool
     address                = string
     user_data_cloud_config = string
-    meta_data_cloud_config = any
+    meta_data_cloud_config = string
   }))
   default = {
 
@@ -48,8 +48,8 @@ variable "vm_configs" {
       cores                  = 2, dedicated = 4096,
       started                = false,
       address                = "192.168.1.101/24",
-      user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_master_1.id",
-      meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_master_1.id"
+      user_data_cloud_config = "local:snippets/user-data-cloud-config-master-1.yaml",
+      meta_data_cloud_config = "local:snippets/meta-data-cloud-config-master-1.yaml"
     }
 
     # "master-2" = {
@@ -70,8 +70,8 @@ variable "vm_configs" {
       dedicated = 2048,
       started = false,
       address = "192.168.1.201/24",
-      user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_worker_1.id",
-      meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_worker_1.id"
+      user_data_cloud_config = "local:snippets/user-data-cloud-config-worker-1.yaml",
+      meta_data_cloud_config = "local:snippets/meta-data-cloud-config-worker-1.yaml"
     }
 
     "worker-2" = {
@@ -81,8 +81,8 @@ variable "vm_configs" {
       dedicated = 2048,
       started = false,
       address = "192.168.1.202/24",
-      user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_worker_2.id",
-      meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_worker_2.id"
+      user_data_cloud_config = "local:snippets/user-data-cloud-config-worker-2.yaml",
+      meta_data_cloud_config = "local:snippets/meta-data-cloud-config-worker-2.yaml"
     }
 
     # "worker-3" = {
