@@ -37,27 +37,28 @@ variable "vm_configs" {
     dedicated = number
     started   = bool
     address   = string
+    user_data_cloud_config = string
   }))
   default = {
-    "master-1" = { vm_id = 101, name = "K3S-Master-1", cores = 2, dedicated = 4096, started = false, address = "192.168.1.101/24" }
+    "master-1" = { vm_id = 101, name = "K3S-Master-1", cores = 2, dedicated = 4096, started = false, address = "192.168.1.101/24", user_data_cloud_config = "user_data_cloud_config_master_1", meta_data_cloud_config = "meta_data_cloud_config_master_1" }
     # "master-2" = { vm_id = 102, name = "K3S-Master-2", cores = 2, dedicated = 4096, started = false, address = "192.168.1.102/24" }
-    "worker-1" = { vm_id = 201, name = "K3S-Worker-1", cores = 1, dedicated = 2048, started = false, address = "192.168.1.201/24" }
-    "worker-2" = { vm_id = 202, name = "K3S-Worker-2", cores = 1, dedicated = 2048, started = false, address = "192.168.1.202/24" }
+    "worker-1" = { vm_id = 201, name = "K3S-Worker-1", cores = 1, dedicated = 2048, started = false, address = "192.168.1.201/24", user_data_cloud_config = "user_data_cloud_config_worker_1", meta_data_cloud_config = "meta_data_cloud_config_worker_1" }
+    "worker-2" = { vm_id = 202, name = "K3S-Worker-2", cores = 1, dedicated = 2048, started = false, address = "192.168.1.202/24", user_data_cloud_config = "user_data_cloud_config_worker_2", meta_data_cloud_config = "meta_data_cloud_config_worker_2"  }
     # "worker-3" = { vm_id = 203, name = "K3S-Worker-3", cores = 1, dedicated = 2048, started = false, address = "192.168.1.203/24" }
   }
 }
 
-variable "config_files" {
-  type = map(object({
-    hostname = string
-    # local_hostname = string
-  }))
+# variable "config_files" {
+#   type = map(object({
+#     hostname = string
+#     # local_hostname = string
+#   }))
 
-  default = {
-    "master-1" = { hostname = "master-1" }
-    # "master-2" = { hostname = "master-2" }
-    "worker-1" = { hostname = "worker-1" }
-    "worker-2" = { hostname = "worker-2" }
-    # "worker-3" = { hostname = "worker-3" }
-  }
-}
+#   default = {
+#     "master-1" = { hostname = "master-1" }
+#     # "master-2" = { hostname = "master-2" }
+#     "worker-1" = { hostname = "worker-1" }
+#     "worker-2" = { hostname = "worker-2" }
+#     # "worker-3" = { hostname = "worker-3" }
+#   }
+# }

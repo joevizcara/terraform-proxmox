@@ -38,8 +38,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
       }
     }
 
-    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config[each.value.hostname].id
-    meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config[each.value.hostname].id
+    user_data_file_id = proxmox_virtual_environment_file.each.value.user_data_cloud_config.id
+    meta_data_file_id = proxmox_virtual_environment_file.each.value.meta_data_cloud_config.id
   }
 
   machine = "q35"
@@ -70,66 +70,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
 data "local_file" "ssh_public_key" {
   filename = "/home/gitlab-runner/.ssh/id_rsa.pub"
-}
-
-
-resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
-
-  for_each = var.config_files
-
-  content_type = "snippets"
-  datastore_id = "local"
-  node_name    = var.pm_node
-
-  source_raw {
-    data = <<-EOF
-    #cloud-config
-    hostname: ${each.value.hostname}
-    timezone: Asia/Manila
-    users:
-      # - default
-      - name: k3s
-        groups:
-          - sudo
-        shell: /bin/bash
-        ssh_authorized_keys:
-          - ${trimspace(data.local_file.ssh_public_key.content)}
-        sudo: ALL=(ALL) NOPASSWD:ALL
-    package_update: true
-    packages:
-      - qemu-guest-agent
-      - net-tools
-      - curl
-    runcmd:
-      - systemctl enable qemu-guest-agent
-      - systemctl start qemu-guest-agent
-      - snap remove core22
-      - snap remove snapd
-      - apt purge snapd -y
-      - apt update && apt full-upgrade -y
-      - echo "finished" > /tmp/cloud-config.finished
-    EOF
-
-    file_name = "user-data-cloud-config${each.value.hostname}.yaml"
-  }
-}
-
-resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
-
-  for_each = var.config_files
-
-  content_type = "snippets"
-  datastore_id = "local"
-  node_name    = var.pm_node
-
-  source_raw {
-    data = <<-EOF
-    #cloud-config
-    local-hostname: ${each.value.hostname}
-    EOF
-
-    file_name = "meta-data-cloud-config-${each.value.hostname}.yaml"
-  }
 }
 
 output "ipv4_addresses" {
