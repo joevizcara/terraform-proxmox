@@ -3,7 +3,6 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   datastore_id = "local"
   node_name    = var.pm_node
   url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-  overwrite    = true
   # need to rename the file to *.qcow2 to indicate the actual file format for import
   file_name = "noble-server-cloudimg-amd64.qcow2"
 }
@@ -73,6 +72,9 @@ data "local_file" "ssh_public_key" {
 }
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
+
+  for_each = var.config_files
+
   content_type = "snippets"
   datastore_id = "local"
   node_name    = var.pm_node
@@ -80,7 +82,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    hostname: master-1
+    hostname: ${each.value.hostname}
     timezone: Asia/Manila
     users:
       # - default
@@ -103,14 +105,17 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
       - snap remove snapd
       - apt purge snapd -y
       - apt update && apt full-upgrade -y
-      - echo "done" > /tmp/cloud-config.done
+      - echo "finished" > /tmp/cloud-config.finished
     EOF
 
-    file_name = "user-data-cloud-config.yaml"
+    file_name = "user-data-cloud-config${each.value.hostname}.yaml"
   }
 }
 
 resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
+
+  for_each = var.config_files
+
   content_type = "snippets"
   datastore_id = "local"
   node_name    = var.pm_node
@@ -118,10 +123,10 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    local-hostname: master-1
+    local-hostname: ${each.value.hostname}
     EOF
 
-    file_name = "meta-data-cloud-config.yaml"
+    file_name = "meta-data-cloud-config-${each.value.hostname}.yaml"
   }
 }
 
