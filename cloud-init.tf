@@ -83,8 +83,8 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     hostname: master-1
     timezone: Asia/Manila
     users:
-      - k3s
-      - name: k3s
+      - default
+      - name: ubuntu
         groups:
           - sudo
         shell: /bin/bash
