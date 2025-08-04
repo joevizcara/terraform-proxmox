@@ -49,7 +49,7 @@ variable "vm_configs" {
       started                = false,
       address                = "192.168.1.101/24",
       user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_master_1.id",
-      meta_data_cloud_config = "proxmox_virtual_environment_file.each.value.meta_data_cloud_config_master_1.id"
+      meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_master_1.id"
     }
 
     # "master-2" = {
@@ -60,7 +60,7 @@ variable "vm_configs" {
     # started = false,
     # address = "192.168.1.102/24"
     # user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_master_2.id",
-    # meta_data_cloud_config = "proxmox_virtual_environment_file.each.value.meta_data_cloud_config_master_2.id"
+    # meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_master_2.id"
     # }
 
     "worker-1" = {
@@ -71,7 +71,7 @@ variable "vm_configs" {
       started = false,
       address = "192.168.1.201/24",
       user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_worker_1.id",
-      meta_data_cloud_config = "proxmox_virtual_environment_file.each.value.meta_data_cloud_config_worker_1.id"
+      meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_worker_1.id"
     }
 
     "worker-2" = {
@@ -82,7 +82,7 @@ variable "vm_configs" {
       started = false,
       address = "192.168.1.202/24",
       user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_worker_2.id",
-      meta_data_cloud_config = "proxmox_virtual_environment_file.each.value.meta_data_cloud_config_worker_2.id"
+      meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_worker_2.id"
     }
 
     # "worker-3" = {
@@ -91,7 +91,7 @@ variable "vm_configs" {
     # cores = 1, dedicated = 2048,
     # started = false, address = "192.168.1.203/24"
     # user_data_cloud_config = "proxmox_virtual_environment_file.user_data_cloud_config_worker_3.id",
-    # meta_data_cloud_config = "proxmox_virtual_environment_file.each.value.meta_data_cloud_config_worker_3.id"
+    # meta_data_cloud_config = "proxmox_virtual_environment_file.meta_data_cloud_config_worker_3.id"
     # }
 
   }
