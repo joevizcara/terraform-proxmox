@@ -14,7 +14,7 @@ destroy infra:
   stage: infra-destroy
   script:
     - tofu init
-    # - tofu refresh -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+    - tofu refresh -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
     - tofu destroy -auto-approve -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
 # plan infra:
 #   stage: infra-plan
