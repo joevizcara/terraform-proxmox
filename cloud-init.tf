@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
-  machine = "q35"
+  # machine = "q35"
 
   memory {
     dedicated = each.value.dedicated
