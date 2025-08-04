@@ -38,6 +38,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     ip_config {
       ipv4 {
         address = each.value.address
+        gateway = var.gateway_url
       }
     }
 
