@@ -9,13 +9,8 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
 }
 
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
+
   for_each = var.vm_configs
-
-  vm_id     = each.value.vm_id
-  name      = each.value.name
-  started   = each.value.started
-
-  node_name = var.pm_node
 
   agent {
     enabled = true
@@ -23,14 +18,16 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   cpu {
     cores = each.value.cores
+    type = "host"
   }
 
   disk {
+    cache = "writeback"
     datastore_id = "local-lvm"
+    discard = "on"
     import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
-    discard      = "on"
     size         = 16
   }
 
@@ -41,18 +38,34 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
         gateway = var.gateway_url
       }
     }
-
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
     meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
+  machine = "q35"
+
   memory {
     dedicated = each.value.dedicated
+    floating = 512
   }
+
+  name      = each.value.name
+  node_name = var.pm_node
 
   network_device {
     bridge = "vmbr0"
   }
+
+  on_boot = false
+  started   = each.value.started
+  tablet_device = false
+  scsi_hardware = "virtio-scsi-single"
+
+  vga {
+    type = "none"
+  }
+
+  vm_id     = each.value.vm_id
 }
 
 data "local_file" "ssh_public_key" {
@@ -67,11 +80,11 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    hostname: k3s
+    hostname: master-1
     timezone: Asia/Manila
     users:
       - default
-      - name: ubuntu
+      - name: k3s
         groups:
           - sudo
         shell: /bin/bash
@@ -102,7 +115,7 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   source_raw {
     data = <<-EOF
     #cloud-config
-    local-hostname: k3s
+    local-hostname: master-1
     EOF
 
     file_name = "meta-data-cloud-config.yaml"

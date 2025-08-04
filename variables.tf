@@ -39,8 +39,8 @@ variable "vm_configs" {
     address   = string
   }))
   default = {
-    "master-1" = { vm_id = 101, name = "Master-1", cores = 2, dedicated = 4096, started = false, address = "192.168.1.101/24" }
-    # "worker-1" = { vm_id = 201, name = "Worker-1", cores = 1, dedicated = 2048, started = false, address = "192.168.1.201/24" }
-    # "worker-2" = { vm_id = 202, name = "Worker-2", cores = 1, dedicated = 2048, started = false, address = "192.168.1.202/24" }
+    "master-1" = { vm_id = 101, name = "K3S-Master-1", cores = 2, dedicated = 4096, started = false, address = "192.168.1.101/24" }
+    # "worker-1" = { vm_id = 201, name = "K3S-Worker-1", cores = 1, dedicated = 2048, started = false, address = "192.168.1.201/24" }
+    # "worker-2" = { vm_id = 202, name = "K3S-Worker-2", cores = 1, dedicated = 2048, started = false, address = "192.168.1.202/24" }
   }
 }
