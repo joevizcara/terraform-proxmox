@@ -37,9 +37,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
         gateway = var.gateway_url
       }
     }
-
-    user_data_file_id = proxmox_virtual_environment_file.each.value.user_data_cloud_config.id
-    meta_data_file_id = proxmox_virtual_environment_file.each.value.meta_data_cloud_config.id
+    user_data_file_id = each.value.user_data_cloud_config
+    meta_data_file_id = each.value.meta_data_cloud_config
   }
 
   machine = "q35"
@@ -73,6 +72,5 @@ data "local_file" "ssh_public_key" {
 }
 
 output "ipv4_addresses" {
-  # Use a map to collect the VM names as keys and their IPv4 addresses as values
   value = { for name, vm in proxmox_virtual_environment_vm.ubuntu_vm : name => vm.initialization[0].ip_config[0].ipv4[0].address }
 }
