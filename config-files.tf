@@ -88,23 +88,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config_worker_1" {
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 
-    file_name = "user-data-cloud-config-master-1.yaml"
-  }
-}
-
-resource "proxmox_virtual_environment_file" "meta_data_cloud_config_worker_1" {
-
-  content_type = "snippets"
-  datastore_id = "local"
-  node_name    = var.pm_node
-
-  source_raw {
-    data = <<-EOF
-    #cloud-config
-    local-hostname: worker-1
-    EOF
-
-    file_name = "meta-data-cloud-config-worker-1.yaml"
+    file_name = "user-data-cloud-config-worker-1.yaml"
   }
 }
 
