@@ -18,13 +18,13 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   cpu {
     cores = each.value.cores
-    type = "host"
+    type  = "host"
   }
 
   disk {
-    cache = "writeback"
+    cache        = "writeback"
     datastore_id = "local-lvm"
-    discard = "on"
+    discard      = "on"
     import_from  = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
@@ -46,7 +46,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   memory {
     dedicated = each.value.dedicated
-    floating = 512
+    floating  = 512
   }
 
   name      = each.value.name
@@ -56,8 +56,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     bridge = "vmbr0"
   }
 
-  on_boot = false
-  started   = each.value.started
+  on_boot       = false
+  started       = each.value.started
   tablet_device = false
   scsi_hardware = "virtio-scsi-single"
 
@@ -65,7 +65,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     type = "none"
   }
 
-  vm_id     = each.value.vm_id
+  vm_id = each.value.vm_id
 }
 
 data "local_file" "ssh_public_key" {
