@@ -28,3 +28,13 @@ bash <(curl -s https://gitlab.com/joevizcara/terraform-proxmox/-/raw/master/prep
 
 Key: `PM_API_TOKEN_SECRET` \
 Value: `<the token secret value from credentials.txt>`
+
+4. Go to GitLab Project/Repository > Build > Jobs and click Run button of the `apply infra` job.
+
+5. Start your new VMs to test.
+
+5. Go to PVE and right-click the gitlab-runner LXC and click `Console`.
+6. Access your VMs with `ssh k3s@192.168.1.xxx`
+
+> [!NOTE]
+> The IP addresses are defined in `variables.tf`. They can be manually be converted into templates using the PVE Web UI.

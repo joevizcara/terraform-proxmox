@@ -10,7 +10,7 @@ resource "proxmox_virtual_environment_file" "_master_1" {
     hostname: master-1
     timezone: Asia/Manila
     users:
-      - default
+      # - default
       - name: k3s
         groups:
           - sudo
@@ -64,7 +64,7 @@ resource "proxmox_virtual_environment_file" "_worker_1" {
     hostname: worker-1
     timezone: Asia/Manila
     users:
-      - default
+      # - default
       - name: k3s
         groups:
           - sudo
@@ -118,7 +118,7 @@ resource "proxmox_virtual_environment_file" "_worker_2" {
     hostname: worker-2
     timezone: Asia/Manila
     users:
-      - default
+      # - default
       - name: k3s
         groups:
           - sudo
