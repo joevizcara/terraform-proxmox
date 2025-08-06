@@ -38,7 +38,6 @@ variable "vm_configs" {
     address                = string
     user_data_cloud_config = string
     meta_data_cloud_config = string
-    resource_id            = string
   }))
   default = {
 
