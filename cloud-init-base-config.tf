@@ -18,7 +18,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   cpu {
     cores = each.value.cores
     numa  = true
-    type  = "x86-64-v2-AES"
   }
 
   disk {
