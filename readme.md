@@ -38,3 +38,8 @@ Value: `<the token secret value from credentials.txt>`
 
 > [!NOTE]
 > The IP addresses are defined in `variables.tf`. They can be manually be converted into templates using the PVE Web UI.
+
+
+# Diagramme
+
+![diagramme](Screenshot_20250806_200817.png)
