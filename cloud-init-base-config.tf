@@ -63,7 +63,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   scsi_hardware   = "virtio-scsi-single"
 
   vga {
-    memory = 0
     type   = "none"
   }
 
