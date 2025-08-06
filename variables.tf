@@ -38,6 +38,7 @@ variable "vm_configs" {
     address                = string
     user_data_cloud_config = string
     meta_data_cloud_config = string
+    resource_id            = string
   }))
   default = {
 
@@ -50,6 +51,7 @@ variable "vm_configs" {
       address                = "192.168.1.101/24",
       user_data_cloud_config = "local:snippets/user-data-cloud-config-master-1.yaml",
       meta_data_cloud_config = "local:snippets/meta-data-cloud-config-master-1.yaml"
+      resource_id            = "local:import/noble-server-cloudimg-amd64.qcow2"
     }
 
     # "master-2" = {
@@ -72,6 +74,7 @@ variable "vm_configs" {
       address                = "192.168.1.201/24",
       user_data_cloud_config = "local:snippets/user-data-cloud-config-worker-1.yaml",
       meta_data_cloud_config = "local:snippets/meta-data-cloud-config-worker-1.yaml"
+      resource_id            = "101"
     }
 
     "worker-2" = {
@@ -83,6 +86,7 @@ variable "vm_configs" {
       address                = "192.168.1.202/24",
       user_data_cloud_config = "local:snippets/user-data-cloud-config-worker-2.yaml",
       meta_data_cloud_config = "local:snippets/meta-data-cloud-config-worker-2.yaml"
+      resource_id            = "201"
     }
 
     # "worker-3" = {

@@ -11,6 +11,10 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   for_each = var.vm_configs
 
+  depends_on = [
+    each.value.resource_id
+  ]
+
   agent {
     enabled = true
   }
