@@ -24,4 +24,7 @@ bash <(curl -s https://gitlab.com/joevizcara/terraform-proxmox/-/raw/master/prep
 > Please examine the content of this shell script before executing it. You can execute it on a virtualized Proxmox VE to observe what it does.
 > It will create a privileged PAM user to authenticate via a token. Because the API limitation of the Terraform provider, it will also need to add the SSH public key to the authorized keys to write the cloud-init configuration YAML files to the local Snippets datastore. It creates a small LXC environment for GitLab Runner to manage the Proxmox resources. It will be adding a few more data types that can be accepeted in the local datastore (e.g. Snippets, Import).
 
-3.
+3. Go to GitLab Project/Repository > Settings > CI/CD > Variables > Add variable:
+
+Key: `PM_API_TOKEN_SECRET` \
+Value: `<the token secret value from credentials.txt>`
