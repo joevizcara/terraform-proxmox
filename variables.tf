@@ -44,8 +44,9 @@ variable "vm_configs" {
 
     "master-1" = {
       vm_id                  = 101,
-      name                   = "K3S-Master-1",
-      cores                  = 2, dedicated = 4096,
+      name                   = "K3s-Master-1",
+      cores                  = 2,
+      dedicated              = 4096,
       started                = false,
       address                = "192.168.1.101/24",
       user_data_cloud_config = "local:snippets/user-data-cloud-config-master-1.yaml",
@@ -54,7 +55,7 @@ variable "vm_configs" {
 
     # "master-2" = {
     # vm_id = 102,
-    # name = "K3S-Master-2",
+    # name = "K3s-Master-2",
     # cores = 2,
     # dedicated = 4096,
     # started = false,
@@ -65,7 +66,7 @@ variable "vm_configs" {
 
     "worker-1" = {
       vm_id                  = 201,
-      name                   = "K3S-Worker-1",
+      name                   = "K3s-Worker-1",
       cores                  = 1,
       dedicated              = 2048,
       started                = false,
@@ -76,7 +77,7 @@ variable "vm_configs" {
 
     "worker-2" = {
       vm_id                  = 202,
-      name                   = "K3S-Worker-2",
+      name                   = "K3s-Worker-2",
       cores                  = 1,
       dedicated              = 2048,
       started                = false,
@@ -87,7 +88,7 @@ variable "vm_configs" {
 
     # "worker-3" = {
     # vm_id = 203,
-    # name = "K3S-Worker-3",
+    # name = "K3s-Worker-3",
     # cores = 1, dedicated = 2048,
     # started = false, address = "192.168.1.203/24"
     # user_data_cloud_config = "local:snippets/user-data-cloud-config-worker-3.yaml",

@@ -10,7 +10,7 @@ resource "proxmox_virtual_environment_file" "_master_1" {
     hostname: master-1
     timezone: Asia/Manila
     users:
-      # - default
+      - default
       - name: k3s
         groups:
           - sudo
@@ -28,7 +28,7 @@ resource "proxmox_virtual_environment_file" "_master_1" {
       - systemctl start qemu-guest-agent
       - snap remove core22
       - snap remove snapd
-      - apt purge snapd -y
+      - apt purge snapd -y && apt update && apt full-upgrade -y
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 
@@ -64,7 +64,7 @@ resource "proxmox_virtual_environment_file" "_worker_1" {
     hostname: worker-1
     timezone: Asia/Manila
     users:
-      # - default
+      - default
       - name: k3s
         groups:
           - sudo
@@ -82,7 +82,7 @@ resource "proxmox_virtual_environment_file" "_worker_1" {
       - systemctl start qemu-guest-agent
       - snap remove core22
       - snap remove snapd
-      - apt purge snapd -y
+      - apt purge snapd -y && apt update && apt full-upgrade -y
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 
@@ -118,7 +118,7 @@ resource "proxmox_virtual_environment_file" "_worker_2" {
     hostname: worker-2
     timezone: Asia/Manila
     users:
-      # - default
+      - default
       - name: k3s
         groups:
           - sudo
@@ -136,7 +136,7 @@ resource "proxmox_virtual_environment_file" "_worker_2" {
       - systemctl start qemu-guest-agent
       - snap remove core22
       - snap remove snapd
-      - apt purge snapd -y
+      - apt purge snapd -y && apt update && apt full-upgrade -y
       - echo "finished" > /tmp/cloud-config.finished
     EOF
 

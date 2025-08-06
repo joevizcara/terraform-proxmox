@@ -17,7 +17,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   cpu {
     cores = each.value.cores
-    type  = "host"
+    numa  = true
+    type  = "x86-64-v2-AES"
   }
 
   disk {
@@ -55,13 +56,15 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     bridge = "vmbr0"
   }
 
-  on_boot       = false
-  started       = each.value.started
-  tablet_device = false
-  scsi_hardware = "virtio-scsi-single"
+  on_boot         = false
+  started         = each.value.started
+  stop_on_destroy = true
+  tablet_device   = false
+  scsi_hardware   = "virtio-scsi-single"
 
   vga {
-    type = "none"
+    memory = 0
+    type   = "none"
   }
 
   vm_id = each.value.vm_id
