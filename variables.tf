@@ -23,10 +23,9 @@ variable "gateway_url" {
   default = "192.168.1.1"
 }
 
-
 variable "pm_node" {
   type    = string
-  default = "neo"
+  default = "pve"
 }
 
 variable "vm_configs" {
