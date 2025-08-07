@@ -16,14 +16,18 @@ bash <(curl -s https://gitlab.com/joevizcara/terraform-proxmox/-/raw/master/prep
 ```
 
 > [!CAUTION]
-> The content of this shell script can be examined before executing it. It can be executed on a virtualized Proxmox VE to observe what it does. It will create a privileged PAM user to authenticate via an API token. It creates a small LXC environment for GitLab Runner to manage the Proxmox resources. Because of the API limitations between the Terraform provider and PVE, it will necessitate to add the SSH public key from the LXC to the **authorized keys** of the PVE node to write the cloud-init configuration YAML files to the local Snippets datastore. It will also add a few more data types that can be accepeted in the local datastore (e.g. Snippets, Import). Consider enabling [two-factor authentication](https://docs.gitlab.com/user/profile/account/two_factor_authentication/#enable-two-factor-authentication) on GitLab if this is to be applied on a real environment.
+> The content of this shell script can be examined before executing it. It can be executed on a virtualized Proxmox VE to observe what it does. It will create a privileged PAM user to authenticate via an API token. It creates a small LXC environment for GitLab Runner to manage the Proxmox resources. Because of the API [limitations](https://search.opentofu.org/provider/bpg/proxmox/latest/docs/resources/virtual_environment_file#snippets) between the Terraform provider and PVE, it will necessitate to add the SSH public key from the LXC to the **authorized keys** of the PVE node to write the cloud-init configuration YAML files to the local Snippets datastore. It will also add a few more data types that can be accepeted in the local datastore (e.g. Snippets, Import). Consider enabling [two-factor authentication](https://docs.gitlab.com/user/profile/account/two_factor_authentication/#enable-two-factor-authentication) on GitLab if this is to be applied on a real environment.
 
 6. Go to **GitLab Project/Repository > Settings > CI/CD > Variables > Add variable**:
 
-Key: `PM_API_TOKEN_SECRET` \
-Value: the token secret value from **credentials.txt**
+**Key**: `PM_API_TOKEN_SECRET` \
+**Value**: the token secret value from **credentials.txt**
 
-7. If this repository is cloned locally, adjust the values of the **.tf** files to conform with the PVE onto which this will be deployed. `git push` signals will trigger the GitLab Runner and will apply the infrastructure changes.
+7. If this repository is cloned locally, adjust the values of the **.tf** files to conform with the PVE onto which this will be deployed.
+
+> [!NOTE]
+> The Terraform provider resgistry is [bpg/proxmox](https://search.opentofu.org/provider/bpg/proxmox/latest) for reference.
+> `git push` signals will trigger the GitLab Runner and will apply the infrastructure changes.
 
 8. If the first job stage succeeded, go to **GitLab Project/Repository > Build > Jobs** and click **Run** ▶️ button of the **apply infra** job.
 
