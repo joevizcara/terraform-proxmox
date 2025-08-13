@@ -34,7 +34,7 @@ pct create $VMID local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst \
   --password changeme \
   --unprivileged 1 \
   --cores 1 \
-  --memory 256 \
+  --memory 512 \
   --swap 0 \
   --storage local-lvm \
   --rootfs 4 \
