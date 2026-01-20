@@ -6,31 +6,31 @@ cache:
     - tfplan
 
 stages:
-  - infra-destroy
-  # - infra-plan
-  # - infra-apply
+  # - infra-destroy
+  - infra-plan
+  - infra-apply
 
-destroy infra:
-  stage: infra-destroy
+# destroy infra:
+#   stage: infra-destroy
+#   script:
+#     - tofu init
+#     - tofu refresh -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+#     - tofu destroy -auto-approve -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
+plan infra:
+  stage: infra-plan
   script:
-    - tofu init
-    - tofu refresh -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
-    - tofu destroy -auto-approve -var="pm_api_token_secret=$PM_API_TOKEN_SECRET"
-# plan infra:
-#   stage: infra-plan
-#   script:
-#     - tofu init -upgrade
-#     - tofu validate
-#     - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
-#     - tofu show -no-color tfplan > tfplan.txt
-#   artifacts:
-#     paths:
-#       - tfplan.txt
+    - tofu init -upgrade
+    - tofu validate
+    - tofu plan -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -out=tfplan
+    - tofu show -no-color tfplan > tfplan.txt
+  artifacts:
+    paths:
+      - tfplan.txt
 
-# apply infra:
-#   stage: infra-apply
-#   script:
-#     - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -auto-approve
-#   dependencies:
-#     - plan infra
-#   when: manual
+apply infra:
+  stage: infra-apply
+  script:
+    - tofu apply -var="pm_api_token_secret=$PM_API_TOKEN_SECRET" -auto-approve
+  dependencies:
+    - plan infra
+  when: manual
